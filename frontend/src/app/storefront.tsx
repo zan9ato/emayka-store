@@ -3,7 +3,7 @@ import {useEffect,useMemo,useState} from "react";
 import Link from "next/link";
 import {usePathname,useSearchParams} from "next/navigation";
 const P=[
-{id:1,slug:"polo",name:"Поло в полоску",cat:"Поло",price:3490,color:"Синий",sizes:["S","M","L","XL"],img:"https://images.unsplash.com/photo-1625910513413-5fc4b3f5f2f2?auto=format&fit=crop&w=900&q=85",tag:"Новинка"},
+{id:1,slug:"polo",name:"Поло в полоску",cat:"Поло",price:3490,color:"Синий",sizes:["S","M","L","XL"],img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85",tag:"Новинка"},
 {id:2,slug:"vest",name:"Жилет утеплённый",cat:"Верхняя одежда",price:5990,color:"Чёрный",sizes:["M","L","XL"],img:"https://images.unsplash.com/photo-1544923246-77307dd654cb?auto=format&fit=crop&w=900&q=85"},
 {id:3,slug:"tee",name:"Футболка базовая",cat:"Футболки",price:1990,color:"Белый",sizes:["S","M","L","XL"],img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85"},
 {id:4,slug:"shirt",name:"Рубашка Oxford",cat:"Рубашки",price:4290,color:"Голубой",sizes:["S","M","L","XL"],img:"https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=900&q=85",tag:"Хит"},
@@ -15,7 +15,7 @@ const P=[
 const money=(n:number)=>new Intl.NumberFormat("ru-RU").format(n)+" ₽";
 const load=(k:string,d:any)=>{try{return JSON.parse(localStorage.getItem(k)||"null")??d}catch{return d}};
 function Heart(){return <svg viewBox="0 0 24 24"><path d="M20.8 8.8c0 5.2-8.8 10.2-8.8 10.2S3.2 14 3.2 8.8A4.7 4.7 0 0 1 12 6.2a4.7 4.7 0 0 1 8.8 2.6Z"/></svg>}
-function Card({p,fav,toggle}:{p:any;fav:number[];toggle:(n:number)=>void}){return <article className="product"><Link href={"/product/"+p.slug} className="photo"><img src={p.img} alt={p.name}/>{p.tag&&<small>{p.tag}</small>}</Link><button className={"heart "+(fav.includes(p.id)?"on":"")} onClick={()=>toggle(p.id)} aria-label="В избранное"><Heart/></button><Link href={"/product/"+p.slug} className="prodline"><span>{p.name}</span><b>{money(p.price)}</b></Link><small className="muted">{p.color}</small></article>}
+function Card({p,fav,toggle}:{p:any;fav:number[];toggle:(n:number)=>void}){return <article className="product"><Link href={"/product/"+p.slug} className="photo"><img src={p.img} alt={p.name} loading="lazy" onError={e=>{e.currentTarget.onerror=null;e.currentTarget.src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85"}}/>{p.tag&&<small>{p.tag}</small>}</Link><button className={"heart "+(fav.includes(p.id)?"on":"")} onClick={()=>toggle(p.id)} aria-label="В избранное"><Heart/></button><Link href={"/product/"+p.slug} className="prodline"><span>{p.name}</span><b>{money(p.price)}</b></Link><small className="muted">{p.color}</small></article>}
 export default function Storefront(){const path=usePathname();const params=useSearchParams();const [cart,setCart]=useState<any[]>([]),[fav,setFav]=useState<number[]>([]),[hydrated,setHydrated]=useState(false),[size,setSize]=useState("M"),[toast,setToast]=useState(""),[query,setQuery]=useState(""),[sort,setSort]=useState("По популярности"),[cat,setCat]=useState("Все"),[search,setSearch]=useState(false),[menu,setMenu]=useState(false),[done,setDone]=useState(false),[adminTab,setAdminTab]=useState("Заказы");
 useEffect(()=>{setCart(load("emayka-cart",[]));setFav(load("emayka-fav",[]));setHydrated(true)},[]);
 useEffect(()=>{if(hydrated)localStorage.setItem("emayka-cart",JSON.stringify(cart))},[cart,hydrated]);
