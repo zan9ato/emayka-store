@@ -16,10 +16,10 @@ const money=(n:number)=>new Intl.NumberFormat("ru-RU").format(n)+" ₽";
 const load=(k:string,d:any)=>{try{return JSON.parse(localStorage.getItem(k)||"null")??d}catch{return d}};
 function Heart(){return <svg viewBox="0 0 24 24"><path d="M20.8 8.8c0 5.2-8.8 10.2-8.8 10.2S3.2 14 3.2 8.8A4.7 4.7 0 0 1 12 6.2a4.7 4.7 0 0 1 8.8 2.6Z"/></svg>}
 function Card({p,fav,toggle}:{p:any;fav:number[];toggle:(n:number)=>void}){return <article className="product"><Link href={"/product/"+p.slug} className="photo"><img src={p.img} alt={p.name}/>{p.tag&&<small>{p.tag}</small>}</Link><button className={"heart "+(fav.includes(p.id)?"on":"")} onClick={()=>toggle(p.id)} aria-label="В избранное"><Heart/></button><Link href={"/product/"+p.slug} className="prodline"><span>{p.name}</span><b>{money(p.price)}</b></Link><small className="muted">{p.color}</small></article>}
-export default function Storefront(){const path=usePathname();const params=useSearchParams();const [cart,setCart]=useState<any[]>([]),[fav,setFav]=useState<number[]>([]),[size,setSize]=useState("M"),[toast,setToast]=useState(""),[query,setQuery]=useState(""),[sort,setSort]=useState("По популярности"),[cat,setCat]=useState("Все"),[search,setSearch]=useState(false),[menu,setMenu]=useState(false),[done,setDone]=useState(false);
-useEffect(()=>{setCart(load("emayka-cart",[]));setFav(load("emayka-fav",[]))},[]);
-useEffect(()=>{localStorage.setItem("emayka-cart",JSON.stringify(cart))},[cart]);
-useEffect(()=>{localStorage.setItem("emayka-fav",JSON.stringify(fav))},[fav]);
+export default function Storefront(){const path=usePathname();const params=useSearchParams();const [cart,setCart]=useState<any[]>([]),[fav,setFav]=useState<number[]>([]),[hydrated,setHydrated]=useState(false),[size,setSize]=useState("M"),[toast,setToast]=useState(""),[query,setQuery]=useState(""),[sort,setSort]=useState("По популярности"),[cat,setCat]=useState("Все"),[search,setSearch]=useState(false),[menu,setMenu]=useState(false),[done,setDone]=useState(false);
+useEffect(()=>{setCart(load("emayka-cart",[]));setFav(load("emayka-fav",[]));setHydrated(true)},[]);
+useEffect(()=>{if(hydrated)localStorage.setItem("emayka-cart",JSON.stringify(cart))},[cart,hydrated]);
+useEffect(()=>{if(hydrated)localStorage.setItem("emayka-fav",JSON.stringify(fav))},[fav,hydrated]);
 const toggle=(id:number)=>setFav(v=>v.includes(id)?v.filter(x=>x!==id):[...v,id]);
 const add=(p:any)=>{setCart(v=>{const f=v.find(x=>x.id===p.id&&x.size===size);return f?v.map(x=>x.id===p.id&&x.size===size?{...x,qty:x.qty+1}:x):[...v,{...p,size,qty:1}]});setToast("Добавлено в корзину");setTimeout(()=>setToast(""),2000)};
 const count=cart.reduce((a,x)=>a+x.qty,0),total=cart.reduce((a,x)=>a+x.price*x.qty,0);
