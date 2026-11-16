@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+:root { color-scheme: light; --ink:#171717; --muted:#77736f; --paper:#f5f3ef; --accent:#d9ff55; --line:rgba(23,23,23,.14); }
+* { box-sizing:border-box; } html { min-height:100%; }
+body { margin:0; background:var(--paper); color:var(--ink); font-family:"Manrope",Arial,sans-serif; }
+a { color:inherit; text-decoration:none; }
+.storefront { max-width:1600px; margin:0 auto; padding:0 5.2vw 80px; }
+.header { min-height:88px; display:flex; align-items:center; justify-content:space-between; gap:28px; border-bottom:1px solid var(--line); }
+.wordmark { font-size:31px; line-height:1; font-weight:800; letter-spacing:-2px; }
+.navigation,.headerActions { display:flex; align-items:center; gap:27px; font-size:12px; font-weight:700; }
+.headerActions { gap:20px; }
+.hero { display:grid; grid-template-columns:.92fr 1.08fr; min-height:min(690px,72vw); gap:4vw; align-items:center; padding:54px 0 66px; }
+.heroContent { max-width:540px; padding:25px 0; }
+.eyebrow { font-size:10px; font-weight:800; letter-spacing:.2em; text-transform:uppercase; }
+.hero h1 { margin:25px 0 20px; font-size:clamp(44px,6.3vw,88px); line-height:.99; letter-spacing:-.075em; font-weight:600; }
+.heroDescription { max-width:380px; color:var(--muted); font-size:14px; line-height:1.8; }
+.primaryButton { display:inline-flex; align-items:center; gap:38px; margin-top:28px; padding:17px 20px; background:var(--ink); color:white; font-size:12px; font-weight:700; }
+.primaryButton span { color:var(--accent); font-size:18px; }
+.heroVisual { min-height:520px; height:100%; position:relative; overflow:hidden; display:flex; align-items:flex-end; padding:25px; background:linear-gradient(145deg,#d7d0c5 0%,#b8afa2 45%,#77736e 100%); }
+.heroVisual::before { content:""; position:absolute; width:48%; height:78%; left:27%; top:13%; border-radius:48% 48% 10% 10%; background:linear-gradient(110deg,#eee9df,#a7a096 55%,#55514d); transform:rotate(-7deg); box-shadow:35px 30px 70px rgba(0,0,0,.18); }
+.heroVisual::after { content:""; position:absolute; inset:0; background:linear-gradient(0deg,rgba(0,0,0,.22),transparent 45%); }
+.heroVisual span { position:relative; z-index:1; color:white; font-size:10px; letter-spacing:.18em; }
+.intro { padding:70px 0 20px; border-top:1px solid var(--line); }
+.intro h2 { margin:18px 0 12px; font-size:clamp(30px,4vw,54px); letter-spacing:-.06em; font-weight:600; }
+.intro>p:last-child { max-width:520px; color:var(--muted); font-size:13px; line-height:1.8; }
+@media(max-width:760px) { .storefront{padding:0 20px 50px}.header{min-height:72px;flex-wrap:wrap;padding:18px 0}.navigation{order:3;width:100%;gap:18px}.headerActions{gap:12px;font-size:10px}.hero{grid-template-columns:1fr;gap:24px;padding:38px 0 50px}.hero h1{font-size:clamp(46px,13vw,70px)}.heroVisual{min-height:390px} }
