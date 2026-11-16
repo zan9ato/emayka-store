@@ -1,0 +1,1 @@
+import {Suspense} from "react"; import Storefront from "../../storefront"; export default function Page(){return <Suspense fallback={null}><Storefront/></Suspense>;}
